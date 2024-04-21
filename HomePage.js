@@ -55,12 +55,6 @@ export default function HomePage() {
                       color: "#111"
                     }}
                   >Username</Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: "#111"
-                    }}
-                  >Product Manager</Text>
                 </View>
                 <DrawerItemList {...props} />
               </SafeAreaView>
@@ -119,10 +113,10 @@ export default function HomePage() {
           component={Categories}
         />
         <Drawer.Screen
-          name="Customize"
+          name="Schedule"
           options={{
-            drawerLabel: "Customize",
-            title: "Customize",
+            drawerLabel: "Schedule",
+            title: "Schedule",
             drawerIcon: () => (
               <MaterialIcons name="dashboard-customize" size={20} color="#808080" />
             )
@@ -141,29 +135,8 @@ export default function HomePage() {
           component={Settings}
         />
 
-        <Drawer.Screen
-          name="Backups"
-          options={{
-            drawerLabel: "Backups",
-            title: "Backups",
-            drawerIcon: () => (
-              <MaterialIcons name="backup" size={20} color="#808080" />
-            )
-          }}
-          component={Backups}
-        />
 
-        <Drawer.Screen
-          name="Get Premium"
-          options={{
-            drawerLabel: "Get Premuim",
-            title: "Get Premium",
-            drawerIcon: () => (
-              <MaterialCommunityIcons name="certificate" size={20} color="#808080" />
-            )
-          }}
-          component={GetPremium}
-        />
+    
        
 
         <Drawer.Screen

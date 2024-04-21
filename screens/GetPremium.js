@@ -1,10 +1,62 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import ScheduleWidget from './ScheduleWidget';
+import moment from 'moment'; // Ensure moment is imported if used
+import { useNavigation } from '@react-navigation/native';
 
-export default function GetPremium() {
+const GetPremium = ({ route }) => {
+  // Safely destructure with a default empty array
+  const { schedules = [] } = route.params || {};
+  const navigation = useNavigation();
+
+  const addSch = () => {
+    navigation.navigate("Settings"); // Navigate back to the 'Settings' screen
+  };
   return (
-    <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-      <Text>GetPremium</Text>
-    </View>
-  )
-}
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Scheduled Timers</Text>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={addSch}
+      >
+        <Text style={styles.addButtonText}>Add Schedule</Text>
+      </TouchableOpacity>
+      {schedules.map((schedule, index) => (
+  <ScheduleWidget
+    key={index}
+    Title_Name={schedule.name}
+    OnTime={moment(schedule.onTime).format('hh:mm A')}
+    OffTime={moment(schedule.offOffTime).format('hh:mm A')}
+    Days={schedule.days.join(', ')}
+  />
+))}
+
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+
+  addButton: {
+    alignSelf: 'flex-end',
+    backgroundColor: 'blue',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  addButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
+
+export default GetPremium;

@@ -28,7 +28,7 @@ const Login = () => {
             return;
         }
         try {
-            const response = await axios.post('http://192.168.1.109:6000/login', {
+            const response = await axios.post('http://192.168.1.116:6000/login', {
                 email,
                 password,
             });
@@ -131,7 +131,7 @@ const Login = () => {
                 <Button
                     title='Login'
                     filled
-                    onPress={() => navigation.navigate('HomePage')}
+                    onPress={handleSubmit}
                     style={{
                         marginTop: 18,
                         marginBottom: 4,
