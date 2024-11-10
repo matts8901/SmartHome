@@ -10,7 +10,7 @@ const Customize = ({ route }) => {
   const navigation = useNavigation();
 
   const addSch = () => {
-    navigation.navigate("Settings"); // Navigate back to the 'Settings' screen
+    navigation.navigate("CreateSchedule"); // Navigate back to the 'Settings' screen
   };
   return (
     <ScrollView style={styles.container}>
@@ -26,10 +26,11 @@ const Customize = ({ route }) => {
     key={index}
     Title_Name={schedule.name}
     OnTime={moment(schedule.onTime).format('hh:mm A')}
-    OffTime={moment(schedule.offOffTime).format('hh:mm A')}
+    OffTime={moment(schedule.offTime).format('hh:mm A')} // Corrected
     Days={schedule.days.join(', ')}
   />
 ))}
+
 
     </ScrollView>
   );

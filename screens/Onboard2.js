@@ -19,7 +19,7 @@ const navigation = useNavigation();
       </View>
       <View style={{ height: whiteHeight, backgroundColor: 'white' }}>
         <View style={{ height: buttonHeight, alignItems: 'center', justifyContent: 'center'}}>
-            <View> 
+            <View style={{marginTop:30}}> 
                 <Text style={{textAlign:"center", fontWeight:"700", fontSize:21, paddingVertical:10, marginTop:60}}>Manage Home</Text>
                 <Text style={{paddingHorizontal:3, marginBottom:25}}>Make your life easier. Control lights, locks, and thermostats - all from one place.</Text>
             </View>
@@ -27,10 +27,17 @@ const navigation = useNavigation();
           <TouchableOpacity onPress={() => navigation.navigate('Onboard3')} style={styles.button}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
+          
           </View>
+          <TouchableOpacity onPress={() => navigation.navigate('Welcome')} style={styles.skipB}>
+            <Text style={styles.skipText}>skip</Text>
+          </TouchableOpacity>
         </View>
+        
       </View>
+  
     </View>
+    
   );
 }
 
@@ -50,6 +57,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  skipB: {
+    position:"relative",
+    left:130,
+    top:35,
+  },
+  skipText:{
+    fontSize:24,
+  },
+  
 });
 
 export default Onboard2;

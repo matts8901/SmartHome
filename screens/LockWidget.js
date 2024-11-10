@@ -2,11 +2,11 @@ import React, { useState, useRef } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import WebSocket from 'react-native-websocket';
-
+import { useTheme } from './ThemeContext';
 function LockWidget() {
   const [isLocked, setIsLocked] = useState(true);
   const websocketRef = useRef(null);
-
+  const {darkMode} = useTheme();
   const toggleLock = () => {
     setIsLocked(!isLocked);
     if (websocketRef.current) {
@@ -18,11 +18,11 @@ function LockWidget() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleLock}>
-        <Icon name={isLocked ? 'lock' : 'lock-open-variant'} size={100} color="#000" />
+        <Icon name={isLocked ? 'lock' : 'lock-open-variant'} size={100} style={[darkMode && styles.darkModewid]} />
       </TouchableOpacity>
       <WebSocket
         ref={websocketRef}
-        url="ws://192.168.1.117:8765" // Update with your server URL
+        url="ws://172.20.10.14:8765" // Update with your server URL
         onOpen={() => console.log('WebSocket connected')}
         onClose={() => console.log('WebSocket disconnected')}
         onError={(error) => console.log('WebSocket error:', error)}
@@ -38,6 +38,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  darkModewid:{
+    color:"white",
   }
 });
 

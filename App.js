@@ -28,11 +28,15 @@ import Bathroom from './screens/Bathroom';
 import Onboard1 from './screens/Onboard1';
 import Onboard2 from './screens/Onboard2';
 import Onboard3 from './screens/Onboard3';
+import Onboard4 from './screens/OnBoard4';
+import CreateSchedule from './screens/CreateSchedule';
+import { ThemeProvider } from './screens/ThemeContext';
 
 const Stack = createNativeStackNavigator();
 function App() {
   const [schedules, setSchedules] = useState([]);
   return (
+    <ThemeProvider> 
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName='Onboard1'
@@ -68,6 +72,13 @@ function App() {
             headerShown: false
           }}
         />
+        <Stack.Screen
+          name="Onboard4"
+          component={Onboard4}
+          options={{
+            headerShown: false
+          }}
+        />
 
         <Stack.Screen
           name="Login"
@@ -91,6 +102,14 @@ function App() {
             headerShown: false
           }}
         />
+        
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
+          options={{
+            headerShown: false
+          }}
+        />
 
         <Stack.Screen
           name="LivingRoom"
@@ -100,7 +119,27 @@ function App() {
           }}
 
           
-        /> 
+        />
+
+        <Stack.Screen
+          name="CreateSchedule"
+          component={CreateSchedule}
+          options={{
+            headerShown: false
+          }}
+
+          
+        />
+
+<Stack.Screen
+          name="Customize"
+          component={Customize}
+          options={{
+            headerShown: false
+          }}
+
+          
+        />  
 
 <Stack.Screen name="GetPremium">
   {(props) => <GetPremium {...props} schedules={schedules} />}
@@ -114,15 +153,9 @@ function App() {
             headerShown: false
           }}
         /> 
-        <Stack.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            headerShown: false
-          }}
-        /> 
       </Stack.Navigator>
     </NavigationContainer>
+    </ThemeProvider>
   );
 }
 

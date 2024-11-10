@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import {
   SimpleLineIcons,
   MaterialIcons,
@@ -19,11 +19,15 @@ import Home from "./screens/Home";
 import RateApp from "./screens/RateApp";
 import Settings from "./screens/Settings";
 import Timer from "./screens/Timer";
+import Signup from "./screens/Signup";
+import { Welcome } from "./screens";
+import CreateSchedule from "./screens/CreateSchedule";
 
-const Drawer = createDrawerNavigator();
 
 export default function HomePage() {
+  const Drawer = createDrawerNavigator();
   return (
+   
       <Drawer.Navigator
         drawerContent={
           (props) => {
@@ -57,6 +61,34 @@ export default function HomePage() {
                   >Username</Text>
                 </View>
                 <DrawerItemList {...props} />
+                <TouchableOpacity
+  style={{
+    marginTop: 20,
+    alignItems: "center",
+    backgroundColor: "#2b76f0",
+    marginHorizontal: 20,
+    borderRadius: 7,
+  }}
+  onPress={() => {
+    Alert.alert(
+      "Logout",
+      "Are you sure you want to logout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Logout",
+          onPress: () => props.navigation.navigate('Welcome'), // Navigate to Welcome component or perform logout action
+        },
+      ]
+    );
+  }}
+>
+  <Text style={{ fontWeight: "bold", fontSize: 20, color: "white", padding: 10 }}>Logout</Text>
+</TouchableOpacity>
+
               </SafeAreaView>
             )
           }
@@ -90,17 +122,7 @@ export default function HomePage() {
           }}
           component={Home}
         />
-        <Drawer.Screen
-          name="Timer"
-          options={{
-            drawerLabel: "Timer",
-            title: "Timer",
-            drawerIcon: () => (
-              <MaterialIcons name="timer" size={20} color="#808080" />
-            )
-          }}
-          component={Timer}
-        />
+
         <Drawer.Screen
           name="Categories"
           options={{
@@ -124,20 +146,36 @@ export default function HomePage() {
           component={Customize}
         />
         <Drawer.Screen
+  name="CreateSchedule"
+  options={{
+    drawerLabel: "CreateSchedule",
+    title: "CreateSchedule",
+    drawerIcon: () => (
+      <SimpleLineIcons name="settings" size={20} color="white" />
+    ),
+    drawerLabelStyle: {
+      color: 'white', // Set drawer label color to white
+    },
+    drawerItemStyle: {
+      display: 'none', // Hide the drawer item
+    },
+  }}
+  component={CreateSchedule}
+/>
+
+        
+    
+<Drawer.Screen
           name="Settings"
           options={{
             drawerLabel: "Settings",
             title: "Settings",
             drawerIcon: () => (
               <SimpleLineIcons name="settings" size={20} color="#808080" />
-            )
+            ),
           }}
           component={Settings}
         />
-
-
-    
-       
 
         <Drawer.Screen
           name="Contact"
@@ -150,6 +188,9 @@ export default function HomePage() {
           }}
           component={Contact}
         />
+
+
+
       </Drawer.Navigator>
   
   );

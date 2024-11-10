@@ -18,7 +18,7 @@ const Signup = ({ navigation }) => {
       if (!username || !email || !mobile || !password) {
         throw new Error('Please fill in all fields.');
       }
-      const res = await axios.post('http://192.168.1.113:6000/signup', {
+      const res = await axios.post('http://172.20.10.6:6000/signup', {
         username,
         email,
         mobile,

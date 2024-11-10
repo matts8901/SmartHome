@@ -1,76 +1,69 @@
-import React from 'react';
+// EnergyStatusWidget.js
+
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Svg, { Rect, Text as SvgText } from 'react-native-svg';
 
-// Optional: Import a library for data fetching (if needed)
-// import { /* Your data fetching library */ } from 'your-data-fetching-library';
+const EnergyStatusWidget = () => {
+  const [batteryPercentage, setBatteryPercentage] = useState(0);
+  const [sunlightAvailability, setSunlightAvailability] = useState(0);
+  const [pg, setPg] = useState('Loading...');
+  const [edlStatus, setEdlStatus] = useState('Loading...');
+  const [Usage, setUsage] = useState('Loading...');
 
-const BatteryGauge = ({ batteryLevel }) => {
-  const gaugeWidth = 120;
-  const gaugeHeight = 50;
-  const batteryFill = `${batteryLevel * (gaugeWidth - 2)} ${100 - batteryLevel * (gaugeWidth - 2)}`; // Adjust fill based on level
+  useEffect(() => {
+    const ws = new WebSocket('ws://172.20.10.14:8765');
 
-  return (
-    <View style={styles.batteryContainer}>
-      <Svg width={gaugeWidth} height={gaugeHeight}>
-        <Rect
-          x={1} // Add a small offset to avoid stroke overlapping the edge
-          y={1}
-          width={gaugeWidth - 2} // Account for stroke width
-          height={gaugeHeight - 2}
-          fill="gray"
-          rx={4} // Rounded corners for the rectangle
-          ry={4}
-        />
-        <Rect
-          x={1}
-          y={1}
-          width={gaugeWidth - 2}
-          height={gaugeHeight - 2}
-          fill="none"
-          stroke="green"
-          strokeWidth={2}
-          strokeDasharray={batteryFill}
-          rx={4}
-          ry={4}
-        />
-        <SvgText
-          x={gaugeWidth / 2}
-          y={gaugeHeight / 2} // Center text vertically and horizontally
-          textAnchor="middle"
-          dominantBaseline="central"
-          fontSize={20} // Adjust font size as needed
-        >
-          {batteryLevel}%
-        </SvgText>
-      </Svg>
-    </View>
-  );
-};
+    ws.onopen = () => {
+      console.log('Connected to the server');
+    };
 
-export default function EnergyStatusWidget({ consumption, production, batteryLevel, gridSource }) {
-  // Replace with your actual data fetching logic (or use a library)
-  // const consumption = 2.5;
-  // const production = 1.8;
-  // const batteryLevel = 75;
-  // const gridSource = 'EDL';
+    ws.onmessage = (event) => {
+      console.log('Received data:', event.data);
+      const receivedData = JSON.parse(event.data);
+      setBatteryPercentage(receivedData.battery_percentage);
+      setSunlightAvailability(receivedData.sunlight_availability);
+      setPg(receivedData.pg);
+      setEdlStatus(receivedData.edl_status);
+      setUsage(receivedData.usage);
+    };
+
+    ws.onerror = (error) => {
+      console.log('WebSocket error:', error.message);
+    };
+
+    ws.onclose = () => {
+      console.log('Disconnected from the server');
+    };
+
+    // Cleanup function
+    return () => {
+      ws.close();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Overall Energy Status</Text>
       <View style={styles.dataRow}>
-        <Text style={styles.dataLabel}>Consumption:</Text>
-        <Text style={styles.dataValue}>{consumption} kWh</Text>
-        {/* Optional Progress Bar for Consumption */}
+        <Text style={styles.dataLabel}>Sunlight Availability:</Text>
+        <Text style={styles.dataValue}>{sunlightAvailability}%</Text>
       </View>
       <View style={styles.dataRow}>
-        <Text style={styles.dataLabel}>Production:</Text>
-        <Text style={styles.dataValue}>{production} kWh</Text>
-        {/* Optional Progress Bar for Production */}
+        <Text style={styles.dataLabel}>Battery Percentage:</Text>
+        <Text style={styles.dataValue}>{batteryPercentage}%</Text>
       </View>
-      <BatteryGauge batteryLevel={batteryLevel} />
-      <Text style={styles.dataLabel}>Grid Source:</Text>
-      <Text>{gridSource}</Text>
+      <View style={styles.dataRow}>
+        <Text style={styles.dataLabel}>Grid Source:</Text>
+        <Text style={styles.dataValue}>{pg}</Text>
+      </View>
+      <View style={styles.dataRow}>
+        <Text style={styles.dataLabel}>EDL Status:</Text>
+        <Text style={styles.dataValue}>{edlStatus}</Text>
+      </View>
+      <View style={styles.dataRow}>
+        <Text style={styles.dataLabel}>Usage:</Text>
+        <Text style={styles.dataValue}>{Usage}</Text>
+      </View>
     </View>
   );
 };
@@ -78,23 +71,35 @@ export default function EnergyStatusWidget({ consumption, production, batteryLev
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 5,
+    padding: 20,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+    marginTop: 20,
+    marginHorizontal: 10,
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 10,
   },
   dataRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: 8,
+    alignItems: 'center',
   },
   dataLabel: {
-    fontWeight: 'bold',
+    fontWeight: '500',
+    color: '#424242',
   },
   dataValue: {
-    textAlign: 'right',
+    fontWeight: '500',
+    color: '#757575',
   },
 });
+
+export default EnergyStatusWidget;

@@ -28,14 +28,13 @@ const Login = () => {
             return;
         }
         try {
-            const response = await axios.post('http://192.168.1.116:6000/login', {
+            const response = await axios.post('http://172.20.10.6:6000/login', {
                 email,
                 password,
             });
 
             if (response.data.status === 'exist') {
                 const token = response.data.token;
-                // Do something with the token, e.g., store it in AsyncStorage
                 console.log(token);
                 navigation.navigate('HomePage', { isLoggedin: true });
             } else if (response.data === 'notexist') {

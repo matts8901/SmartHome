@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Appliance from './Appliance';
-
+import ApplianceT from './ApplianceT';
+import ApplianceL from './ApplianceL';
 function LivingRoom() {
     const navigation = useNavigation();
 
@@ -37,23 +38,33 @@ function LivingRoom() {
                 name="Smart Light"
                 consumption="10"
                 onToggle={(isOn) => handleToggle(isOn)}
-                controlMessage={"handle"}
             />
 
-                    <Appliance
-                        picicon="light-bulb"
-                        name="Smart Light 2"
+                    <ApplianceT
+                        picicon="television"
+                        name="TV"
                         consumption="10"
                         onToggle={(isOn) => handleToggle(isOn, "toggle_light")}
                         controlMessage={"toggle_light"}
+                        adjt={"Volume"}
+                        min={0}
+                        max={100}
                     />
-                    <Appliance
-                        picicon="light-bulb"
-                        name="Smart Light 3"
-                        consumption="10"
+                    <ApplianceT
+                        picicon="air-conditioner"
+                        name="air-conditioner"
+                        consumption="20"
                         onToggle={(isOn) => handleToggle(isOn, "Lock_Unlock")}
                         controlMessage={"Lock_Unlock"}
+                        adjt={"Temperature"}
+                        min={16}
+                        max={31}
                     />
+                    <ApplianceL
+  name="Motor"
+  consumption={3.5}
+/>
+
                 </View>
             </View>
         </ScrollView>

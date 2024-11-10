@@ -3,7 +3,7 @@ import { View, Text, Dimensions, Image, StyleSheet, TouchableOpacity } from 'rea
 
 const { height } = Dimensions.get('window');
 
-function Onboard3({ navigation }) {
+function Onboard4({ navigation }) {
   // Calculate the height of the blue section (70% of screen height)
   const blueHeight = height * 0.7;
   // Calculate the height of the white section (30% of remaining height)
@@ -14,16 +14,16 @@ function Onboard3({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ height: blueHeight, backgroundColor: '#1500ff', alignItems: 'center', justifyContent: 'center' }}>
-        <Image source={require('../assets/controledev.png')} style={styles.picture} />
+        <Image source={require('../assets/Onboard4.png')} style={styles.picture} />
       </View>
       <View style={{ height: whiteHeight, backgroundColor: 'white' }}>
         <View style={{ height: buttonHeight, alignItems: 'center', justifyContent: 'center'}}>
             <View> 
-                <Text style={{textAlign:"center", fontWeight:"700", fontSize:21, paddingVertical:10, marginTop:60}}>Control Devices</Text>
-                <Text style={{paddingHorizontal:10, marginBottom:25}}>Lights on, thermostat down. Take command of your smart home devices with a tap.</Text>
+                <Text style={{textAlign:"center", fontWeight:"700", fontSize:21, paddingVertical:10, marginTop:60}}>Daily Status</Text>
+                <Text style={{paddingHorizontal:10, marginBottom:25}}>Get info of current grid source, weather...</Text>
             </View>
           <View style={{alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Onboard4')} style={styles.button}>
+          <TouchableOpacity onPress={() => navigation.navigate('Welcome')} style={styles.button}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Welcome')} style={styles.skipB}>
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Onboard3;
+export default Onboard4;
